@@ -2,7 +2,7 @@ const moment = require('moment');
 const request = require('supertest');
 const {Rental} = require('../../models/rental');
 const {Movie} = require('../../models/movie');
-const {User} = require('../../models/user');
+const {User} = require('../../models/user');//User class needed to generate auth token
 const mongoose = require('mongoose');//Import Mongoose
 
 describe('/api/returns', () => {
@@ -13,8 +13,8 @@ describe('/api/returns', () => {
   let movie; 
   let token;
 
-  const exec = () => {
-    return request(server)
+  const exec = () => {//Provides the '/api/returns' endpoint, 'x-auth-token', & customerId & movieId for all tests
+    return request(server)//The caller of the function awaits that promise
       .post('/api/returns')
       .set('x-auth-token', token)
       .send({ customerId, movieId });
@@ -25,7 +25,7 @@ describe('/api/returns', () => {
 
     customerId = mongoose.Types.ObjectId();//Set customerId to new ObjectId
     movieId = mongoose.Types.ObjectId();//Set movieId to new ObjectId
-    token = new User().generateAuthToken();
+    token = new User().generateAuthToken();//Token set to new user
 
     movie = new Movie({
       _id: movieId,//movieId use here
@@ -59,33 +59,33 @@ describe('/api/returns', () => {
 //***All of the code above is the setup code for the tests below***
   //The 'It should work!' test below is run first to make sure the above code works before other
   //tests below it are created.
-  it('Should work!', async () =>  {
-    const result = await Rental.findById(rental._id);
-    expect(result).not.toBeNull();
+  // it('Should work!', async () =>  {
+  //   const result = await Rental.findById(rental._id);
+  //   expect(result).not.toBeNull();
+  // });
+  it('should return 401 if client is not logged in', async () => {
+    token = '';//Set to empty string
+
+    const res = await exec();//Call exec()
+
+    expect(res.status).toBe(401);//Assert response satus to be 401
   });
-  // it('should return 401 if client is not logged in', async () => {
-  //   token = '';
 
-  //   const res = await exec();
-
-  //   expect(res.status).toBe(401);
-  // });
-
-  // it('should return 400 if customerId is not provided', async () => {
-  //   customerId = ''; 
+  it('should return 400 if customerId is not provided', async () => {
+    customerId = ''; 
     
-  //   const res = await exec();
+    const res = await exec();
 
-  //   expect(res.status).toBe(400);
-  // });
+    expect(res.status).toBe(400);
+  });
 
-  // it('should return 400 if movieId is not provided', async () => {
-  //   movieId = ''; 
+  it('should return 400 if movieId is not provided', async () => {
+    movieId = ''; 
 
-  //   const res = await exec();
+    const res = await exec();
 
-  //   expect(res.status).toBe(400);
-  // });
+    expect(res.status).toBe(400);
+  });
 
   // it('should return 404 if no rental found for the customer/movie', async () => {
   //   await Rental.remove({});
