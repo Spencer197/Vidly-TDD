@@ -95,14 +95,14 @@ describe('/api/returns', () => {
     expect(res.status).toBe(404);//Assert response to be 404.
   });//See returns.js for complementary code.
 
-  // it('should return 400 if return is already processed', async () => {
-  //   rental.dateReturned = new Date();
-  //   await rental.save();
+  it('should return 400 if return is already processed', async () => {
+    rental.dateReturned = new Date();//Set dateReturned to current date
+    await rental.save();//Save rental object & await it.
 
-  //   const res = await exec();
+    const res = await exec();//Send an execute request
 
-  //   expect(res.status).toBe(400);
-  // });
+    expect(res.status).toBe(400);//Assert error to be 400
+  });
 
   // it('should return 200 if we have a valid request', async () => {
   //   const res = await exec();

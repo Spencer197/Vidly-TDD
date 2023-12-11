@@ -9,9 +9,9 @@ const router = express.Router();
 router.post('/', [auth, validate(validateReturn)], async (req, res) => {
   const rental = await Rental.lookup(req.body.customerId, req.body.movieId);
 
-  if (!rental) return res.status(404).send('Rental not found.');//Needed for '404 if no rental found'
+  if (!rental) return res.status(404).send('Rental not found.');//Needed for '404 if no rental found'test
 
-  if (rental.dateReturned) return res.status(400).send('Return already processed.');
+  if (rental.dateReturned) return res.status(400).send('Return already processed.');//Needed for '400 if already processed' test
 
   rental.return();
   await rental.save();
