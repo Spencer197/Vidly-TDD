@@ -87,13 +87,13 @@ describe('/api/returns', () => {
     expect(res.status).toBe(400);
   });
 
-  // it('should return 404 if no rental found for the customer/movie', async () => {
-  //   await Rental.remove({});
+  it('should return 404 if no rental found for the customer/movie', async () => {
+    await Rental.remove({});//Delete rental created earlier-Pass empty query object ({}).
 
-  //   const res = await exec();
+    const res = await exec();
 
-  //   expect(res.status).toBe(404);
-  // });
+    expect(res.status).toBe(404);//Assert response to be 404.
+  });//See returns.js for complementary code.
 
   // it('should return 400 if return is already processed', async () => {
   //   rental.dateReturned = new Date();
