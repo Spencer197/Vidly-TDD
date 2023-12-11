@@ -110,13 +110,13 @@ describe('/api/returns', () => {
     expect(res.status).toBe(200);//Asseert response to be 200
   });
 
-  // it('should set the returnDate if input is valid', async () => {
-  //   const res = await exec();
+  it('should set the returnDate if input is valid', async () => {
+    const res = await exec();//Send a valid request
 
-  //   const rentalInDb = await Rental.findById(rental._id);
-  //   const diff = new Date() - rentalInDb.dateReturned;
-  //   expect(diff).toBeLessThan(10 * 1000);
-  // });
+    const rentalInDb = await Rental.findById(rental._id);//Reload rental in DB
+    const diff = new Date() - rentalInDb.dateReturned;//Must find difference between date/time & dateReturned 
+    expect(diff).toBeLessThan(10 * 1000);//Allow for 10 seconds difference
+  });
 
   // it('should set the rentalFee if input is valid', async () => {
   //   rental.dateOut = moment().add(-7, 'days').toDate();
