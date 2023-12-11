@@ -104,11 +104,11 @@ describe('/api/returns', () => {
     expect(res.status).toBe(400);//Assert error to be 400
   });
 
-  // it('should return 200 if we have a valid request', async () => {
-  //   const res = await exec();
+  it('should return 200 if we have a valid request', async () => {
+    const res = await exec();//Send a valid request
 
-  //   expect(res.status).toBe(200);
-  // });
+    expect(res.status).toBe(200);//Asseert response to be 200
+  });
 
   // it('should set the returnDate if input is valid', async () => {
   //   const res = await exec();
