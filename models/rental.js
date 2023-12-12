@@ -2,6 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+//Lesson 14.16-Set rentalSchema to code below as new Mongoose.Schema
 const rentalSchema = new mongoose.Schema({
   customer: { 
     type: new mongoose.Schema({
@@ -57,7 +58,7 @@ const rentalSchema = new mongoose.Schema({
 });
 
 rentalSchema.statics.lookup = function(customerId, movieId) {//Added in Lesson 14.16
-  return this.findOne({//This references the Rental class - This logic from returns.js
+  return this.findOne({//'this' references the Rental class - This logic from returns.js
     'customer._id': customerId,
     'movie._id': movieId,
   });
