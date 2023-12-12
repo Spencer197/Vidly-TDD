@@ -56,8 +56,8 @@ const rentalSchema = new mongoose.Schema({
   }
 });
 
-rentalSchema.statics.lookup = function(customerId, movieId) {
-  return this.findOne({
+rentalSchema.statics.lookup = function(customerId, movieId) {//Added in Lesson 14.16
+  return this.findOne({//This references the Rental class - This logic from returns.js
     'customer._id': customerId,
     'movie._id': movieId,
   });

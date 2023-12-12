@@ -8,11 +8,11 @@ const router = express.Router();
 
 //Borrowed from genres.js in Lesson14.15
 router.post('/', [auth, validate(validateReturn)], async (req, res) => {//auth passed as arg to POST()
-  const rental = await Rental.lookup(req.body.customerId, req.body.movieId);
+  const rental = await Rental.lookup(req.body.customerId, req.body.movieId);//These args available in body of request
 
   if (!rental) return res.status(404).send('Rental not found.');//Needed for '404 if no rental found'test
 
-  if (rental.dateReturned) return res.status(400).send('Return already processed.');//Needed for '400 if already processed' test
+  if (rental.dateReturned) return res.status(400).send('Return already processed.');//For '400 if already processed' test
 
   rental.return();
   await rental.save();
