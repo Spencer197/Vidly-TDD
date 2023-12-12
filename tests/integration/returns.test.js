@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('moment');//Needed to calculate number of days movie has been out.
 const request = require('supertest');
 const {Rental} = require('../../models/rental');
 const {Movie} = require('../../models/movie');
@@ -118,15 +118,15 @@ describe('/api/returns', () => {
     expect(diff).toBeLessThan(10 * 1000);//Allow for 10 seconds difference
   });
 
-  // it('should set the rentalFee if input is valid', async () => {
-  //   rental.dateOut = moment().add(-7, 'days').toDate();
-  //   await rental.save();
+  it('should set the rentalFee if input is valid', async () => {
+    rental.dateOut = moment().add(-7, 'days').toDate();//-7 Makes date 7 days ago - toDate converts date to plain JS object
+    await rental.save();//Save rental date
 
-  //   const res = await exec();
+    const res = await exec();//Execute request
 
-  //   const rentalInDb = await Rental.findById(rental._id);
-  //   expect(rentalInDb.rentalFee).toBe(14);
-  // });
+    const rentalInDb = await Rental.findById(rental._id);//Find rental in DB
+    expect(rentalInDb.rentalFee).toBe(14);//Expect rental fee to $14 ($2*7)
+  });
 
   // it('should increase the movie stock if input is valid', async () => {
   //   const res = await exec();
