@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const moment = require('moment');
+const moment = require('moment');//Moved here from returns.js-Lesson 14.17
 
 //Lesson 14.16-Set rentalSchema to code below as new Mongoose.Schema
 const rentalSchema = new mongoose.Schema({
@@ -64,9 +64,9 @@ rentalSchema.statics.lookup = function(customerId, movieId) {//Added in Lesson 1
   });
 }
 
-rentalSchema.methods.return = function() {
-  this.dateReturned = new Date();
-
+rentalSchema.methods.return = function() {//Lesson 14.17-'methods' property used instead of statics property
+  this.dateReturned = new Date();//Sets the dateReturned of rental
+//Line break - 2 lines below calculate rental fee
   const rentalDays = moment().diff(this.dateOut, 'days');
   this.rentalFee = rentalDays * this.movie.dailyRentalRate;
 }
